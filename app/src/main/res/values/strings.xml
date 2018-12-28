@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">nassab</string>
+
+    <string-array name="spinner_filter_items">
+        <item>پلاک خودرو</item>
+        <item>نام خودرو</item>
+        <item>محل پروژه</item>
+        <item>نام راننده</item>
+        <item>تلفن راننده</item>
+        <item>شناسه دستگاه</item>
+        <item>سیم کارت دستگاه</item>
+    </string-array>
+</resources>

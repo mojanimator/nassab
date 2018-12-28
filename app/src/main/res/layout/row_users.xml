@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/status_user"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/float_size"
+
+
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/secondary_background"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="4dp"
+    app:rippleColor="@color/colorAccent">
+
+    <com.mmr.nassab.Util.CircleNetworkImageView
+        android:id="@+id/civ_user"
+        android:layout_width="@dimen/float_size"
+        android:layout_height="wrap_content"
+
+
+
+        android:foregroundGravity="center_horizontal"
+        android:padding="0dp"
+        android:src="@drawable/ic_user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

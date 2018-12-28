@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#128c7e</color>
+    <color name="colorPrimaryDark">#075e54</color>
+    <color name="colorUninstalled">#BF360C</color>
+    <color name="colorInstalling">#FFD600</color>
+    <color name="colorInstalled">#075e54</color>
+    <color name="colorAll">#212121</color>
+    <color name="colorAccent">#ece5dd</color>
+    <color name="colorTextDisable">#a6ac99</color>
+    <color name="colorText">#fff</color>
+</resources>

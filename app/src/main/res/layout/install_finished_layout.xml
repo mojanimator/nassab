@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:text="همکار"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/expandable_textSize_rows"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rg_hardness"
+        tools:text="همکار" />
+
+    <com.mmr.nassab.Util.PresetRadioGroup
+        android:id="@+id/rg_hardness"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/image_size"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        app:elevation="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        <com.mmr.nassab.Util.HardnessRadioButton
+            android:id="@+id/rb_hardness_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_hardness_1_deactive"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_horizontal"
+
+            app:layout_constraintLeft_toRightOf="@+id/tab_all"
+            app:titleText="1" />
+
+        <com.mmr.nassab.Util.HardnessRadioButton
+            android:id="@+id/rb_hardness_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_hardness_2_deactive"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_horizontal"
+
+            app:layout_constraintLeft_toRightOf="@+id/tab_all"
+            app:titleText="2" />
+    </com.mmr.nassab.Util.PresetRadioGroup>
+
+    <Spinner
+        android:id="@+id/spinner_nassab2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:text="درصد سختی"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/expandable_textSize_rows"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="درصد سختی" />
+
+    <Button
+        android:id="@+id/btn_install_finished"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/primary_background"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:text="تایید"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/expandable_textSize_rows"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_nassab2"
+        tools:text="تایید" />
+</android.support.constraint.ConstraintLayout>

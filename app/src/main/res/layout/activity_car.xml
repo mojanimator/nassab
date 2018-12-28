@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll-sms"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/primary_background"
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/row_car">
+
+        <Button
+            android:id="@+id/btn_asd_reset"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/secondary_background"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="reset"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/expandable_textSize_rows"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_password"
+            tools:text="reset" />
+
+        <Button
+            android:id="@+id/btn_asd_imei"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/secondary_background"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="imei"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/expandable_textSize_rows"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_password"
+            tools:text="imei" />
+
+        <Button
+            android:id="@+id/btn_asd_gsminfo"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/secondary_background"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="gsminfo"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/expandable_textSize_rows"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_password"
+            tools:text="gsminfo" />
+
+        <Button
+            android:id="@+id/btn_asd_getapn"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/secondary_background"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="getapn"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/expandable_textSize_rows"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_password"
+            tools:text="getapn" />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshCarsEdit"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll-sms">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar-cars_status"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/primary_background"
+            android:gravity="center_horizontal"
+            android:minHeight="?attr/actionBarSize"
+            android:padding="4dp"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/row_car">
+
+            <com.mmr.nassab.Util.PresetRadioGroup
+                android:id="@+id/rg_status"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                app:elevation="20dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="4dp">
+
+                <com.mmr.nassab.Util.StateRadioButton
+                    android:id="@+id/status_installed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_installed_deactive"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:gravity="center_horizontal"
+
+                    app:layout_constraintLeft_toRightOf="@+id/tab_all"
+                    app:titleText="2" />
+
+                <com.mmr.nassab.Util.StateRadioButton
+                    android:id="@+id/status_installing"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_installing_deactive"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:gravity="center_horizontal"
+
+                    app:layout_constraintLeft_toRightOf="@+id/tab_installed"
+                    app:titleText="1" />
+
+                <com.mmr.nassab.Util.StateRadioButton
+                    android:id="@+id/status_not_Installed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_notinstalled_deactive"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:gravity="center_horizontal"
+
+                    app:layout_constraintLeft_toRightOf="@+id/tab_installing"
+                    app:titleText="0" />
+
+
+            </com.mmr.nassab.Util.PresetRadioGroup>
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/row_car"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardElevation="10dp"
+        app:elevation="10dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/secondary_background">
+
+
+            <TextView
+                android:id="@+id/tv_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+
+                android:layout_marginStart="8dp"
+                android:background="@drawable/primary_background_top_flat"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp"
+                android:text="0"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iv_status3"
+                app:layout_constraintStart_toStartOf="@+id/iv_status3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_status3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv-driver-simcard"
+                app:layout_constraintStart_toEndOf="@+id/tv-gps-simcard"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cluster"
+                app:srcCompat="@drawable/ic_installed" />
+
+            <TextView
+                android:id="@+id/tv-driver-simcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/secondary_background"
+                android:padding="8dp"
+                android:text="تلفن راننده"
+                android:textColor="@color/colorPrimaryDark"
+
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv-driver-name"
+                tools:text="تلفن راننده" />
+
+            <TextView
+                android:id="@+id/tv-driver-name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/secondary_background"
+                android:padding="8dp"
+                android:text="نام راننده"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv-driver-simcard"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="نام راننده" />
+
+            <TextView
+                android:id="@+id/tv-gps-simcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/all_background"
+                android:padding="8dp"
+                android:text="gps-simcard"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv_imei"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="gps-simcard" />
+
+            <TextView
+                android:id="@+id/tv_imei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/all_background"
+                android:padding="8dp"
+                android:text="imei"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv-gps-simcard" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_marginStart="8dp"
+                android:padding="8dp"
+                android:text="نام"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iv_status3"
+                app:layout_constraintStart_toStartOf="@+id/iv_status3"
+                app:layout_constraintTop_toBottomOf="@+id/tv_code"
+                app:layout_constraintVertical_chainStyle="spread_inside" />
+
+            <TextView
+                android:id="@+id/tv_numberplate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_marginStart="8dp"
+
+                android:background="@drawable/primary_background"
+                android:padding="8dp"
+                android:text="پلاک"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iv_status3"
+                app:layout_constraintStart_toStartOf="@+id/iv_status3"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+            <TextView
+                android:id="@+id/tv_cluster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:padding="8dp"
+                android:text="دسته بندی"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/iv_status3"
+                app:layout_constraintStart_toStartOf="@+id/iv_status3"
+                app:layout_constraintTop_toBottomOf="@+id/tv_numberplate" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>
