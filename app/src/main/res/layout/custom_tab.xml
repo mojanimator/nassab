@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
 
         android:layout_margin="4dp"
+        android:gravity="center_horizontal"
         android:text="Calls"
         android:textColor="@drawable/tab_text_color_selector"
         android:textSize="@dimen/expandable_textSize_rows"

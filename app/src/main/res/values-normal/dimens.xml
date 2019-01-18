@@ -6,8 +6,8 @@
     <dimen name="appBarButtons">48dp</dimen>
     <dimen name="cardView_height">100dp</dimen>
     <dimen name="textSize_tabItem">25sp</dimen>
-    <dimen name="textSize_tab_count">32sp</dimen>
-    <dimen name="textSize_toast">5sp</dimen>
+    <dimen name="textSize_tab_count">16sp</dimen>
+    <dimen name="textSize_toast">8sp</dimen>
     <dimen name="billboard_margin">1dp</dimen>
     <dimen name="peekHeight">80dp</dimen>
     <dimen name="expandable_height">300dp</dimen>
@@ -15,6 +15,9 @@
     <dimen name="status_filter_selected_size">32dp</dimen>
     <dimen name="design_navigation_icon_size" tools:override="true">24dp</dimen>
     <dimen name="image_size">150dp</dimen>
-    <dimen name="float_size">35dp</dimen>
+    <dimen name="float_size">45dp</dimen>
     <dimen name="icon_logo">160dp</dimen>
+    <dimen name="status_image">64dp</dimen>
+    <dimen name="nassab_image">32dp</dimen>
+    <dimen name="margin">1dp</dimen>
 </resources>

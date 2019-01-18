@@ -33,12 +33,13 @@ dependencies {
     compile 'com.android.volley:volley:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
-    implementation 'com.google.android.gms:play-services-location:11.8.0'
-    implementation 'com.google.android.gms:play-services-maps:11.8.0'
-    implementation 'com.google.android.gms:play-services-places:11.8.0'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-places:15.0.1'
 
     compile 'me.dm7.barcodescanner:zbar:1.9.8'
     implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
+    compile 'com.android.support:preference-v7:27.1.0'
 
-
+    implementation 'co.ronash.android:pushe-base:1.4.3'
 }

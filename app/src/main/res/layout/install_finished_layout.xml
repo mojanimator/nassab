@@ -6,8 +6,37 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_gps_pos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/secondary_background"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gps_pos" />
+
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_gps_pos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:text="مکان نصب"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/expandable_textSize_rows"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_install_finished"
+        tools:text="مکان نصب" />
+
+    <TextView
+        android:id="@+id/tv_partner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -17,7 +46,7 @@
         android:textSize="@dimen/expandable_textSize_rows"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rg_hardness"
+        app:layout_constraintTop_toBottomOf="@+id/et_gps_pos"
         tools:text="همکار" />
 
     <com.mmr.nassab.Util.PresetRadioGroup
@@ -34,7 +63,7 @@
         app:elevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/tv_hardness">
 
         <com.mmr.nassab.Util.HardnessRadioButton
             android:id="@+id/rb_hardness_1"
@@ -75,10 +104,10 @@
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_partner" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_hardness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -88,7 +117,7 @@
         android:textSize="@dimen/expandable_textSize_rows"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_nassab2"
         tools:text="درصد سختی" />
 
     <Button
@@ -106,6 +135,6 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_nassab2"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="تایید" />
 </android.support.constraint.ConstraintLayout>

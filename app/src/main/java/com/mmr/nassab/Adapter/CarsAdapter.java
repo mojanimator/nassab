@@ -75,11 +75,17 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.CarViewHolder>
         holder.tvDriver_simcard.setText(tmpData.getDriver_simcard());
         holder.tvCluster.setText(MainActivity.utils.getClusters().get(tmpData.getCluster()));
 
+
         NetUtils.setImage(tmpData.getStatus(), holder.ivStatus);
 
 //        Log.d(MainActivity.TAG, "setNassabImages: " + tmpData.getStatus() + "," + tmpData.getNassab_id());
-        if (tmpData.getStatus() != 0)
+        if (tmpData.getStatus() == 2) {
             setNassabImages(tmpData.getNassab_id(), holder.ivNassab1, holder.ivNassab2);
+            holder.tvGpsPos.setText(" محل نصب:" + tmpData.getGps_pos());
+
+        } else {
+            holder.tvGpsPos.setVisibility(View.GONE);
+        }
 
         holder.itemView.setTranslationY(+30);
         holder.itemView.animate().translationYBy(-30).start();
@@ -157,6 +163,7 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.CarViewHolder>
         TextView tvDriver_name;
         TextView tvDriver_simcard;
         TextView tvCluster;
+        TextView tvGpsPos;
 
         ImageView ivStatus;
         CircleNetworkImageView ivNassab1;
@@ -170,15 +177,16 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.CarViewHolder>
 
             tvCode = itemView.findViewById(R.id.tv_code);
             tvName = itemView.findViewById(R.id.tv_name);
-            tvNumberPlate = itemView.findViewById(R.id.tv_numberplate);
-            tvGps_imei = itemView.findViewById(R.id.tv_imei);
+            tvNumberPlate = itemView.findViewById(R.id.tv_nasb_number);
+            tvGps_imei = itemView.findViewById(R.id.tv_easy_num);
             tvGps_simcard = itemView.findViewById(R.id.tv_gps_simcard);
             tvDriver_name = itemView.findViewById(R.id.tv_driver_name);
             tvDriver_simcard = itemView.findViewById(R.id.tv_driver_simcard);
             tvCluster = itemView.findViewById(R.id.tv_cluster);
-            ivStatus = itemView.findViewById(R.id.iv_status);
+            ivStatus = itemView.findViewById(R.id.iv_image);
             ivNassab1 = itemView.findViewById(R.id.iv_nassab1);
             ivNassab2 = itemView.findViewById(R.id.iv_nassab2);
+            tvGpsPos = itemView.findViewById(R.id.tv_gps_pos);
 
 
         }

@@ -216,6 +216,26 @@
 
 
             <TextView
+                android:id="@+id/tv_gps_pos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_marginBottom="8dp"
+
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/primary_background"
+                android:padding="8dp"
+                android:text="محل نصب"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iv_status3"
+                app:layout_constraintStart_toStartOf="@+id/iv_status3"
+                app:layout_constraintTop_toBottomOf="@+id/iv_status3" />
+
+            <TextView
                 android:id="@+id/tv_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -237,19 +257,18 @@
 
             <ImageView
                 android:id="@+id/iv_status3"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="@dimen/status_image"
+                android:layout_height="@dimen/status_image"
                 android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tv-driver-simcard"
-                app:layout_constraintStart_toEndOf="@+id/tv-gps-simcard"
+                app:layout_constraintEnd_toStartOf="@+id/tv_driver_simcard"
+                app:layout_constraintStart_toEndOf="@+id/tv_imei"
                 app:layout_constraintTop_toBottomOf="@+id/tv_cluster"
                 app:srcCompat="@drawable/ic_installed" />
 
             <TextView
-                android:id="@+id/tv-driver-simcard"
+                android:id="@+id/tv_driver_simcard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
@@ -263,11 +282,11 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv-driver-name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_driver_name"
                 tools:text="تلفن راننده" />
 
             <TextView
-                android:id="@+id/tv-driver-name"
+                android:id="@+id/tv_driver_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -278,16 +297,17 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/expandable_textSize_rows"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/tv-driver-simcard"
+                app:layout_constraintBottom_toTopOf="@+id/tv_driver_simcard"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="نام راننده" />
 
             <TextView
-                android:id="@+id/tv-gps-simcard"
+                android:id="@+id/tv_gps_simcard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/all_background"
                 android:padding="8dp"
                 android:text="gps-simcard"
@@ -313,7 +333,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv-gps-simcard" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_gps_simcard" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -332,7 +352,7 @@
                 app:layout_constraintVertical_chainStyle="spread_inside" />
 
             <TextView
-                android:id="@+id/tv_numberplate"
+                android:id="@+id/tv_nasb_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
@@ -362,7 +382,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/iv_status3"
                 app:layout_constraintStart_toStartOf="@+id/iv_status3"
-                app:layout_constraintTop_toBottomOf="@+id/tv_numberplate" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_nasb_number" />
 
         </android.support.constraint.ConstraintLayout>
 

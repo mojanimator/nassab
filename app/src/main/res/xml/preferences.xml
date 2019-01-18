@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:title="تنظیمات">
+
+    <PreferenceCategory android:title="مبلغ">
+
+        <EditTextPreference
+            android:dialogTitle=" مبلغ عادی (تومان) را وارد کنید"
+
+            android:key="regular_price"
+            android:summary="هزینه ی نصب عادی را وارد کنید"
+            android:title="نصب عادی" />
+        <EditTextPreference
+            android:dialogTitle="مبلغ ویژه (تومان) را وارد کنید"
+            android:key="hard_price"
+            android:summary="هزینه ی نصب زمان بر را وارد کنید"
+
+            android:title="نصب زمان بر" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

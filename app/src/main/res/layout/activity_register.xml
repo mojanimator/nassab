@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorText">
+    android:background="@color/colorText"
+    android:clickable="false">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="false">
 
         <TextView
             android:id="@+id/tv-phone"
@@ -76,6 +78,7 @@
 
         <ImageView
             android:id="@+id/ivRegister"
+            style="@style/Widget.AppCompat.ImageButton"
             android:layout_width="@dimen/image_size"
             android:layout_height="@dimen/image_size"
             android:layout_marginEnd="8dp"
@@ -83,8 +86,11 @@
             android:layout_marginTop="24dp"
             android:clickable="true"
             android:contentDescription="عکس نصاب"
-            android:focusable="true"
+            android:descendantFocusability="beforeDescendants"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:foreground="?android:attr/selectableItemBackground"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -188,4 +194,4 @@
 
     </android.support.constraint.ConstraintLayout>
 
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

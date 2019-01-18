@@ -1,6 +1,5 @@
 package com.mmr.nassab;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -27,6 +26,8 @@ import com.mmr.nassab.Util.Utils;
 
 import java.io.ByteArrayOutputStream;
 
+import co.ronash.pushe.Pushe;
+
 /**
  * Created by Mojtaba Rajabi on 22/12/2018.
  */
@@ -48,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Pushe.initialize(this, true);
+
         setContentView(R.layout.activity_register);
         view = this.getWindow().getDecorView().findViewById(R.id.layout_register);
         Utils.overrideFonts(this, view);
@@ -61,16 +65,22 @@ public class RegisterActivity extends AppCompatActivity {
         et_phone = findViewById(R.id.et_phone);
 
         ivRegister = findViewById(R.id.ivRegister);
+
         ivRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
-                    if (ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                    if (ContextCompat.checkSelfPermission(RegisterActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+                        ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+
                     } else {
+
                         pickImageFromDeviceGallery();
                     }
+                } else {
+                    pickImageFromDeviceGallery();
                 }
 
             }
@@ -87,15 +97,17 @@ public class RegisterActivity extends AppCompatActivity {
                 if (username.equals("") || password.equals("") || encodedString.equals("") ||
                         card.equals("") || phone.equals("")) {
                     Utils.mToast(getBaseContext(), "ورودی ها نامعتبر هستند", Toast.LENGTH_SHORT);
-                } else
-
-                    netUtils.registerEditLoginLogout("register", username, password, encodedString, phone, card, android.os.Build.BRAND + '~' + android.os.Build.MODEL + "~" + Utils.screenSizeInches(activity));
+                } else if (Pushe.isPusheInitialized(activity)) { //pushe service
+                    Pushe.subscribe(activity, "nasb");
+                    netUtils.registerEditLoginLogout("register", username, password, encodedString, phone, card, android.os.Build.BRAND + '~' + android.os.Build.MODEL + "~" + Utils.screenSizeInches(activity), Pushe.getPusheId(activity));
+                }
             }
         });
     }
 
     private void pickImageFromDeviceGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Log.d(MainActivity.TAG, "pickImageFromDeviceGallery: ");
         startActivityForResult(galleryIntent, REQUEST_IMAGE_FROM_GALLERY);
     }
 
@@ -131,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
                 bmpPicByteArray = bmpStream.toByteArray();
                 streamLength = bmpPicByteArray.length;
                 compressQuality -= 10;
-                Log.d(MainActivity.TAG, "len " + streamLength + "," + MAX_IMAGE_SIZE);
+//                Log.d(MainActivity.TAG, "len " + streamLength + "," + MAX_IMAGE_SIZE);
 
             } while (streamLength >= MAX_IMAGE_SIZE);
 
@@ -166,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
                 inSampleSize *= 2;
             }
         }
-        Log.d(debugTag, "inSampleSize: " + inSampleSize);
+//        Log.d(debugTag, "inSampleSize: " + inSampleSize);
         return inSampleSize;
     }
 
@@ -179,11 +191,12 @@ public class RegisterActivity extends AppCompatActivity {
                     pickImageFromDeviceGallery();
                 } else {
                     Utils.mToast(getApplicationContext(),
-                            " لطفا اجازه دسترسی به حافظه را تایید کنید!", Toast.LENGTH_LONG);
+                            " لطفا اجازه دسترسی به حافظه را تایید کنید!", Toast.LENGTH_SHORT);
 
                 }
             }
         }
 
     }
+
 }

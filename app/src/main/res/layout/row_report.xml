@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/row_car"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+
+        android:layout_marginTop="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardElevation="10dp"
+        app:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/all_background">
+
+
+            <TextView
+                android:id="@+id/tv-credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/uninstalled_background"
+                android:text="0"
+                android:textColor="@color/colorUninstalled"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tv_credit_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv-hard_num"
+                tools:text="0" />
+
+            <TextView
+                android:id="@+id/tv_credit_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="بستانکار: "
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv-credit"
+                app:layout_constraintEnd_toEndOf="@+id/tv-hard_num"
+                app:layout_constraintTop_toTopOf="@+id/tv-credit" />
+
+            <TextView
+                android:id="@+id/tv_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+
+                android:layout_marginStart="8dp"
+                android:background="@drawable/primary_background_top_flat"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp"
+                android:text="0"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_image"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv-hard_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/all_background"
+                android:text="نصب سخت: "
+                android:textColor="@color/colorAll"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv-easy_label"
+                tools:text="نصب سخت: " />
+
+            <TextView
+                android:id="@+id/tv-easy_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/all_background"
+                android:text="نصب آسان: "
+                android:textColor="@color/colorAll"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                tools:text="نصب آسان: " />
+
+            <TextView
+                android:id="@+id/tv-hard_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/installing_background"
+                android:text="0"
+                android:textColor="@color/colorAll"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tv-hard_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv_easy_num"
+                tools:text="0" />
+
+            <TextView
+                android:id="@+id/tv_easy_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/installing_background"
+                android:text="0"
+                android:textColor="@color/colorAll"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tv-easy_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_marginStart="8dp"
+                android:text="نام"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_code"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <com.mmr.nassab.Util.CircleNetworkImageView
+                android:id="@+id/iv_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv-hard_num"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/logo" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.mmr.nassab.R;
 import com.mmr.nassab.Util.Utils;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Mojtaba Rajabi on 23/12/2018.
@@ -22,9 +22,9 @@ public class SpinnersAdapter extends ArrayAdapter {
 
     private final LayoutInflater mInflater;
     private final Context context;
-    private ArrayList<String> items = new ArrayList<>();
+    private List<String> items;
 
-    public SpinnersAdapter(Context context, ArrayList<String> objects) {
+    public SpinnersAdapter(Context context, List<String> objects) {
         super(context, R.layout.row_users, 0, objects);
         this.context = context;
         items = objects;
@@ -32,6 +32,7 @@ public class SpinnersAdapter extends ArrayAdapter {
 
 
     }
+
 
     @Override
     public int getCount() {

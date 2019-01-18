@@ -6,24 +6,24 @@ package com.mmr.nassab.Model;
 
 public class Report {
 
-    private int gps_id;
-    private int person_id;
+    private String gps_id;
+    private String person_id;
     private String hardness;
     private String date;
 
-    public int getId() {
+    public String getGPSId() {
         return gps_id;
     }
 
-    public void setId(int gps_id) {
+    public void setGPSId(String gps_id) {
         this.gps_id = gps_id;
     }
 
-    public int getPerson_id() {
+    public String getPerson_id() {
         return person_id;
     }
 
-    public void setPerson_id(int person_id) {
+    public void setPerson_id(String person_id) {
         this.person_id = person_id;
     }
 

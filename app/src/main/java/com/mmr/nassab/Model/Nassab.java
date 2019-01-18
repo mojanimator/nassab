@@ -13,6 +13,7 @@ public class Nassab {
     private String card;
     private String status;
     private String image;
+    private String push_id;
 
     public int getId() {
         return id;
@@ -70,5 +71,13 @@ public class Nassab {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPush_id() {
+        return push_id;
+    }
+
+    public void setPush_id(String push_id) {
+        this.push_id = push_id;
     }
 }

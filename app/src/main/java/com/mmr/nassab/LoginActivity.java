@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btn_login:
                 username = et_username.getText().toString();
                 password = et_password.getText().toString();
-                netUtils.registerEditLoginLogout("login", username, password, "", "", "", "");
+                netUtils.registerEditLoginLogout("login", username, password, "", "", "", "", "");
 
                 break;
             case R.id.btn_register:

@@ -5,7 +5,7 @@
     android:id="@+id/car_activity"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/margin"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardElevation="10dp"
     app:elevation="10dp">
@@ -15,20 +15,43 @@
         android:id="@+id/row_car"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:foreground="?android:attr/selectableItemBackground"
         app:cardElevation="10dp"
         app:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/secondary_background">
 
+
+            <TextView
+                android:id="@+id/tv_gps_pos"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/primary_background"
+                android:padding="8dp"
+                android:text="محل نصب"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_driver_simcard" />
 
             <TextView
                 android:id="@+id/tv_code"
@@ -52,26 +75,26 @@
 
             <com.mmr.nassab.Util.CircleNetworkImageView
                 android:id="@+id/iv_nassab1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/nassab_image"
+                android:layout_height="@dimen/nassab_image"
                 android:layout_marginStart="8dp"
 
-                app:layout_constraintStart_toEndOf="@+id/iv_status"
-                app:layout_constraintTop_toTopOf="@+id/iv_status"
+                app:layout_constraintStart_toEndOf="@+id/iv_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_image"
                 app:riv_corner_radius="20dp"
                 app:riv_oval="true"
                 app:riv_tile_mode="clamp" />
 
             <com.mmr.nassab.Util.CircleNetworkImageView
                 android:id="@+id/iv_nassab2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/nassab_image"
+                android:layout_height="@dimen/nassab_image"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
 
 
-                app:layout_constraintBottom_toBottomOf="@+id/iv_status"
-                app:layout_constraintStart_toEndOf="@+id/iv_status"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_image"
+                app:layout_constraintStart_toEndOf="@+id/iv_image"
                 app:layout_constraintTop_toBottomOf="@+id/iv_nassab1"
                 app:riv_corner_radius="20dp"
                 app:riv_oval="true"
@@ -79,81 +102,86 @@
                 app:srcCompat="@drawable/uninstalled_background" />
 
             <TextView
-                android:id="@+id/tv-driver-simcard"
+                android:id="@+id/tv_driver_simcard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/all_background"
                 android:text="تلفن راننده"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorAll"
                 android:textSize="@dimen/expandable_textSize_rows"
                 android:textStyle="bold"
-
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv-driver-name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_driver_name"
                 tools:text="تلفن راننده" />
 
             <TextView
-                android:id="@+id/tv-driver-name"
+                android:id="@+id/tv_driver_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
+                android:background="@drawable/all_background"
                 android:text="نام راننده"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorAll"
                 android:textSize="@dimen/expandable_textSize_rows"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_status"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cluster"
                 tools:text="نام راننده" />
 
             <TextView
-                android:id="@+id/tv-gps-simcard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="gps-simcard"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/expandable_textSize_rows"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_imei"
-                tools:text="gps-simcard" />
-
-            <TextView
-                android:id="@+id/tv_imei"
+                android:id="@+id/tv_gps_simcard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="imei"
-                android:textColor="@color/colorPrimaryDark"
+                android:background="@drawable/installing_background"
+                android:text="gps-simcard"
+                android:textColor="@color/colorAll"
                 android:textSize="@dimen/expandable_textSize_rows"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_status" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_easy_num"
+                tools:text="gps-simcard" />
+
+            <TextView
+                android:id="@+id/tv_easy_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/installing_background"
+                android:text="imei"
+                android:textColor="@color/colorAll"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cluster" />
 
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="نام"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/expandable_textSize_rows"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_nassab1"
-                app:layout_constraintTop_toBottomOf="@+id/tv_code"
+                app:layout_constraintStart_toStartOf="@+id/iv_image"
+                app:layout_constraintTop_toBottomOf="@+id/iv_image"
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/tv_numberplate"
+                android:id="@+id/tv_nasb_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
 
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/primary_background"
                 android:text="پلاک"
@@ -161,7 +189,7 @@
                 android:textSize="@dimen/expandable_textSize_rows"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_nassab1"
+                app:layout_constraintStart_toStartOf="@+id/iv_image"
                 app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
             <TextView
@@ -169,6 +197,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="دسته بندی"
@@ -176,15 +205,16 @@
                 android:textSize="@dimen/expandable_textSize_rows"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_nassab1"
-                app:layout_constraintTop_toBottomOf="@+id/tv_numberplate" />
+                app:layout_constraintStart_toStartOf="@+id/iv_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_nasb_number" />
 
             <ImageView
-                android:id="@+id/iv_status"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:id="@+id/iv_image"
+                android:layout_width="@dimen/status_image"
+                android:layout_height="@dimen/status_image"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/logo" />

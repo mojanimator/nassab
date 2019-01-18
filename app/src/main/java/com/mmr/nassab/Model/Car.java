@@ -19,6 +19,16 @@ public class Car {
     private String device_id;
     private String project_id;
 
+    public String getGps_pos() {
+        return gps_pos;
+    }
+
+    public void setGps_pos(String gps_pos) {
+        this.gps_pos = gps_pos;
+    }
+
+    private String gps_pos;
+
     public String getGps_simcard() {
         return gps_simcard;
     }

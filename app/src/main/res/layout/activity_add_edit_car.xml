@@ -15,8 +15,27 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
             tools:layout_editor_absoluteY="1dp">
 
+
+            <EditText
+                android:id="@+id/et_car_id"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/edittext_background"
+                android:ems="10"
+                android:hint="کد دستگاه"
+                android:inputType="phone"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_gps_imei" />
 
             <EditText
                 android:id="@+id/et_gps_type"
@@ -30,9 +49,10 @@
                 android:hint="نوع دستگاه"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/spinner_gps_type"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/spinner_gps_type"
-                app:layout_constraintTop_toBottomOf="@+id/et_gps_simcard" />
+                app:layout_constraintTop_toTopOf="@+id/spinner_gps_type" />
 
             <ImageView
                 android:id="@+id/ivOpenCamera"
@@ -84,7 +104,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_gps_imei" />
+                app:layout_constraintTop_toBottomOf="@+id/et_car_id" />
 
             <EditText
                 android:id="@+id/et_car_name"
@@ -102,7 +122,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/et_gps_type" />
+                app:layout_constraintTop_toBottomOf="@+id/spinner_gps_type" />
 
 
             <EditText
@@ -162,7 +182,7 @@
             <EditText
                 android:id="@+id/et_cluster"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="37dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/edittext_background"
@@ -171,10 +191,11 @@
 
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/spinner_cluster"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/spinner_cluster"
-                app:layout_constraintTop_toBottomOf="@id/et_driver_phone" />
+                app:layout_constraintTop_toTopOf="@+id/spinner_cluster" />
 
             <EditText
                 android:id="@+id/et_project"
@@ -188,10 +209,11 @@
 
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/spinner_project"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/spinner_project"
-                app:layout_constraintTop_toBottomOf="@id/et_cluster" />
+                app:layout_constraintTop_toTopOf="@+id/spinner_project" />
 
             <Button
                 android:id="@+id/btn_add_car"
@@ -235,43 +257,46 @@
 
             <Spinner
                 android:id="@+id/spinner_cluster"
-                android:layout_width="226dp"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/spinner_background"
-                app:layout_constraintBottom_toBottomOf="@+id/et_cluster"
+                android:padding="0dp"
                 app:layout_constraintEnd_toStartOf="@+id/et_cluster"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_cluster" />
+                app:layout_constraintTop_toBottomOf="@+id/et_driver_phone" />
 
             <Spinner
                 android:id="@+id/spinner_project"
-                android:layout_width="226dp"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/spinner_background"
-                app:layout_constraintBottom_toBottomOf="@+id/et_project"
+                android:padding="0dp"
                 app:layout_constraintEnd_toStartOf="@+id/et_project"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_project" />
+                app:layout_constraintTop_toBottomOf="@+id/spinner_cluster" />
 
 
             <Spinner
                 android:id="@+id/spinner_gps_type"
-                android:layout_width="226dp"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/spinner_background"
-                app:layout_constraintBottom_toBottomOf="@+id/et_gps_type"
+                android:padding="0dp"
                 app:layout_constraintEnd_toStartOf="@+id/et_gps_type"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/et_gps_type" />
+                app:layout_constraintTop_toBottomOf="@+id/et_gps_simcard" />
 
         </android.support.constraint.ConstraintLayout>
 

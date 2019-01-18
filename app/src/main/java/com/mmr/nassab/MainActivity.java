@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -40,7 +41,9 @@ import com.mmr.nassab.Adapter.CarsAdapter;
 import com.mmr.nassab.Adapter.SpinnersAdapter;
 import com.mmr.nassab.Adapter.UsersAdapter;
 import com.mmr.nassab.Model.Car;
+import com.mmr.nassab.Model.Finance;
 import com.mmr.nassab.Model.Nassab;
+import com.mmr.nassab.Model.Report;
 import com.mmr.nassab.Model.Util;
 import com.mmr.nassab.Util.CircleNetworkImageView;
 import com.mmr.nassab.Util.NetUtils;
@@ -53,7 +56,9 @@ import java.util.Arrays;
 
 import javax.net.ssl.SSLContext;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, NetUtils.Communicator {
+import co.ronash.pushe.Pushe;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NetUtils.Communicator, AdapterView.OnItemSelectedListener {
     public static final String TAG = "_tagg";
     Context context;
     private Toolbar toolbar;
@@ -95,13 +100,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
     final Intent intent = new Intent();
     private SpinnerAdapter spinnerFilterSearchAdapter;
-
+    Toolbar toolbatMain;
+    private Spinner spinnerProjects;
+    private SpinnersAdapter spinnerAdapterProjects;
+    private String project;
+    private String whereProject;
+    private ImageButton iBSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         sharedpreferences = getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        Pushe.initialize(this, true);
+
+        toolbatMain = findViewById(R.id.toolbar_main);
+
+        iBSettings = findViewById(R.id.imageButtonSettings);
+        iBSettings.setOnClickListener(this);
 
         myUsername = sharedpreferences.getString("user_name", "");
 
@@ -139,8 +157,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     intent.putExtra("gps_simcard", cars.get(position).getGps_simcard());
                     intent.putExtra("driver_name", cars.get(position).getDriver_name());
                     intent.putExtra("driver_simcard", cars.get(position).getDriver_simcard());
-                    intent.putExtra("cluster", cars.get(position).getCluster());
+                    intent.putExtra("cluster", utils.getClusters().get(cars.get(position).getCluster()));
                     intent.putExtra("status", cars.get(position).getStatus());
+                    intent.putExtra("gps_pos", cars.get(position).getGps_pos());
 
                     startActivity(intent);
                 } catch (IndexOutOfBoundsException e) {
@@ -155,9 +174,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         netUtils = new NetUtils(this, carsAdapter, usersAdapter);
+        netUtils.utils("get"); //get all utils
         netUtils.setCommunicator(this);
         netUtils.getUsers("1", myUsername); //get all users
-        netUtils.getTypeClusterProject(); //get all utils
+
 
         manager = new GridLayoutManager(context, 1);
         cvCarRow = findViewById(R.id.row_car);
@@ -180,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onRefresh() {
                 netUtils.getUsers("1", myUsername); //get all users
-                netUtils.getTypeClusterProject(); //get all utils
+                netUtils.utils("get"); //get all utils
                 search();
                 refreshcars.setRefreshing(false);
             }
@@ -214,9 +234,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-//spinner
+//spinners
+        spinnerProjects = findViewById(R.id.spinner_project);
+        spinnerProjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                project = utils.getProjectNames().get(position);
+//                Log.d(TAG, "p " + project);
+                search();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        spinnerAdapterProjects = new SpinnersAdapter(this, utils.getProjectNames());
+        spinnerProjects.setAdapter(spinnerAdapterProjects);
+
+
         spinnerFilterSearch = (Spinner) findViewById(R.id.spinner_filter_search);
-        spinnerFilterSearchAdapter = new SpinnersAdapter(this, new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.spinner_filter_items))));
+        spinnerFilterSearchAdapter = new SpinnersAdapter(this, Arrays.asList(getResources().getStringArray(R.array.spinner_filter_items)));
         spinnerFilterSearch.setAdapter(spinnerFilterSearchAdapter);
         //        spinnerFilterSearch.setSelection(0);
         spinnerFilterSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -322,16 +360,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         where = whereMaker();
         cars.clear();
         carsAdapter.notifyDataSetChanged();
-        netUtils.getCars(where);
+        netUtils.getCars(where, whereProject);
 
 
     }
 
 
     private String whereMaker() {
-        where = "";
+        whereProject = " `project-id` IN (SELECT `id` FROM `projects` WHERE `name` = '" + project + "' ) ";
+        where = whereProject;
         if (whereStatus != "") {
-            where += "`status` = '" + whereStatus + "'";
+            where += " and `status` = '" + whereStatus + "'";
             if (whereSearch != "" && whereSearch != null)
                 if (searchFilter.equals("cluster-id")) //need search with id
                     where += " and `" + searchFilter + "` IN ( SELECT `id` FROM `clusters` WHERE `name`  LIKE '%" + whereSearch + "%' )";
@@ -339,9 +378,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     where += " and `" + searchFilter + "`  LIKE '%" + whereSearch + "%'";
         } else if (whereSearch != "" && whereSearch != null)
             if (searchFilter.equals("cluster-id")) //need search with id
-                where += "`" + searchFilter + "` IN ( SELECT `id` FROM `clusters` WHERE `name`  LIKE '%" + whereSearch + "%' )";
+                where += " and `" + searchFilter + "` IN ( SELECT `id` FROM `clusters` WHERE `name`  LIKE '%" + whereSearch + "%' )";
             else
-                where += "`" + searchFilter + "` LIKE '%" + whereSearch + "%'";
+                where += " and `" + searchFilter + "` LIKE '%" + whereSearch + "%'";
 //        Log.d(MainActivity.TAG, where);
         return where;
     }
@@ -434,7 +473,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.fab_reports:
-                Log.d(TAG, "onClick: report");
+//                if (myUsername.equals("admin")) {
+                intent.setClass(context, ReportsActivity.class);
+                startActivity(intent);
+//                } else
+//                    Utils.mToast(this, "مجاز نمی باشید", Toast.LENGTH_SHORT);
                 break;
             case R.id.civ_me:
                 Log.d(TAG, "onClick: me");
@@ -443,12 +486,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 etSearch.setText("");
                 whereSearch = "";
                 search();
+                break;
+            case R.id.imageButtonSettings:
+                if (myUsername.equals("admin")) {
+                    intent.setClass(context, SettingsActivity.class);
+                    startActivity(intent);
+                } else
+                    Utils.mToast(this, "مجاز نمی باشید", Toast.LENGTH_SHORT);
 
         }
     }
 
     @Override
     public void response(String response) {
+        if (response.equals("utils200")) {
+            spinnerAdapterProjects.notifyDataSetChanged();
+//            Log.d(TAG, "notifyDataSetChanged: ");
+        }
+
+    }
+
+    @Override
+    public void response(String response, ArrayList<Report> reports, ArrayList<Finance> finances, ArrayList<Nassab> users) {
 
     }
 
@@ -473,7 +532,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
 //            super.onBackPressed();
-            netUtils.registerEditLoginLogout("logout", myUsername, "", "", "", "", ""); //change status to 0
+            netUtils.registerEditLoginLogout("logout", myUsername, "", "", "", "", "", ""); //change status to 0
 
             return;
         }
@@ -494,5 +553,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
 

@@ -28,13 +28,16 @@ import com.mmr.nassab.Adapter.UsersAdapter;
 import com.mmr.nassab.LoginActivity;
 import com.mmr.nassab.MainActivity;
 import com.mmr.nassab.Model.Car;
+import com.mmr.nassab.Model.Finance;
 import com.mmr.nassab.Model.Nassab;
+import com.mmr.nassab.Model.Report;
 import com.mmr.nassab.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +55,8 @@ public class NetUtils {
     private static final String DATABASE_URL_EDIT = DOMAIN + "edit.php";
     private static final String DATABASE_URL_USER = DOMAIN + "user.php";
     private static final String DATABASE_URL_CAR = DOMAIN + "car.php";
+    private static final String DATABASE_URL_UTIL = DOMAIN + "util.php";
+    private static final String DATABASE_URL_REPORT = DOMAIN + "report.php";
     private SharedPreferences sharedpreferences;
     private UsersAdapter usersAdapter;
     private TextView tvPercent;
@@ -71,6 +76,9 @@ public class NetUtils {
     private SwipeRefreshLayout refreshcars, refreshcarsEdit;
     public static int installedCount, installingCount, notInstalledCount, allCount = 0;
     private static boolean loadImageFinished = false;
+    private Report tmpReport;
+    private Finance tmpFinance;
+    private ArrayList<Nassab> users;
 
     public NetUtils(Context context, CarsAdapter carsAdapter, UsersAdapter usersAdapter) {
         this.mCtx = context;
@@ -99,12 +107,13 @@ public class NetUtils {
         mCtx = context;
         refreshcarsEdit = activity.findViewById(R.id.swipeRefreshCarsEdit);
         pbRegisterLogin = activity.findViewById(R.id.pbRegister_login);
+
         if (pbRegisterLogin != null)
             pbRegisterLogin.getIndeterminateDrawable()
                     .setColorFilter(ContextCompat.getColor(mCtx, R.color.colorPrimary), android.graphics.PorterDuff.Mode.SRC_IN);
     }
 
-    public void getTypeClusterProject() {
+    public void getReports(final String requestType) {
 
         if (!isNetworkAvailable(activity)) {
             Utils.mToast(mCtx, "اتصال اینترنت برقرار نیست!", Toast.LENGTH_SHORT);
@@ -112,9 +121,9 @@ public class NetUtils {
             return;
         }
 
-        VolleySingleton.getInstance(mCtx).cancelPendingRequests("utils");
+        VolleySingleton.getInstance(mCtx).cancelPendingRequests(requestType);
 
-        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, DATABASE_URL,
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, DATABASE_URL_REPORT,
                 new Response.Listener<String>() {
                     private JSONArray tmp;
 
@@ -122,8 +131,125 @@ public class NetUtils {
                     public void onResponse(String response) {
 
                         try {
-
 //                            Log.d(TAG, "resp " + response);
+
+                            HashMap<String, String> param = new HashMap<>();
+                            JSONArray rsp;
+                            JSONObject jsonObject;
+
+
+                            ArrayList<Report> reports;
+                            ArrayList<Finance> finances;
+
+                            reports = new ArrayList<>();
+                            finances = new ArrayList<>();
+                            users = new ArrayList<>();
+
+                            if (response != null && !response.equals("")) {
+//                                Log.d(TAG, response);
+//                                rsp = new JSONArray(response);
+
+                                tmp = new JSONArray();
+                                jsonObject = new JSONObject(response);
+
+
+                                tmp = jsonObject.getJSONArray("reports");
+                                for (int i = 0; i < tmp.length(); i++) {
+                                    tmpReport = new Report();
+
+                                    tmpReport.setGPSId(tmp.getJSONObject(i).getString("gps-id"));
+                                    tmpReport.setPerson_id(tmp.getJSONObject(i).getString("person-id"));
+                                    tmpReport.setHardness(tmp.getJSONObject(i).getString("hardness"));
+                                    tmpReport.setDate(tmp.getJSONObject(i).getString("date"));
+
+                                    reports.add(tmpReport);
+                                }
+
+                                tmp = jsonObject.getJSONArray("finances");
+                                for (int i = 0; i < tmp.length(); i++) {
+                                    tmpFinance = new Finance();
+
+                                    tmpFinance.setId(tmp.getJSONObject(i).getString("id"));
+                                    tmpFinance.setPerson_id(tmp.getJSONObject(i).getString("person-id"));
+                                    tmpFinance.setPrice(tmp.getJSONObject(i).getDouble("price"));
+                                    tmpFinance.setDescription(tmp.getJSONObject(i).getString("description"));
+                                    tmpFinance.setDate(tmp.getJSONObject(i).getString("date"));
+
+                                    finances.add(tmpFinance);
+                                }
+
+                                tmp = jsonObject.getJSONArray("nassabs");
+                                for (int i = 0; i < tmp.length(); i++) {
+                                    tmpUser = new Nassab();
+                                    tmpUser.setId(tmp.getJSONObject(i).getInt("id"));
+                                    tmpUser.setName(tmp.getJSONObject(i).getString("name"));
+                                    tmpUser.setPhone(tmp.getJSONObject(i).getString("phone"));
+                                    tmpUser.setCard(tmp.getJSONObject(i).getString("card"));
+                                    tmpUser.setStatus(tmp.getJSONObject(i).getString("status"));
+                                    tmpUser.setImage(tmp.getJSONObject(i).getString("image"));
+
+                                    users.add(tmpUser);
+                                }
+
+                                showHideRefresh(false);
+
+                                communicator.response("reports200", reports, finances, users);
+                            }
+//
+                        } catch (JSONException e) {
+                            Log.d(TAG, "JSONException " + e.getMessage());
+                            showHideRefresh(false);
+                        }
+
+                    }
+                },
+                new Response.ErrorListener()
+
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Utils.mToast(mCtx, " خطا " + '\n' + error.getMessage(), Toast.LENGTH_SHORT);
+                    }
+                })
+
+        {
+
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                params.put("request_type", requestType);
+
+
+                return params;
+            }
+        };
+        jsonArrayRequest.setTag(requestType);
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(2500, 4, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(mCtx).addToRequestQueue(jsonArrayRequest);
+
+    }
+
+    public void utils(final String requestType) {
+
+        if (!isNetworkAvailable(activity)) {
+            Utils.mToast(mCtx, "اتصال اینترنت برقرار نیست!", Toast.LENGTH_SHORT);
+
+            return;
+        }
+
+        VolleySingleton.getInstance(mCtx).cancelPendingRequests(requestType);
+
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, DATABASE_URL_UTIL,
+                new Response.Listener<String>() {
+                    private JSONArray tmp;
+
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+//                            Log.d(TAG, "resp " + response);
+
                             HashMap<String, String> param = new HashMap<>();
                             JSONArray rsp;
                             JSONObject jsonObject;
@@ -134,22 +260,28 @@ public class NetUtils {
 
                                 tmp = new JSONArray();
                                 jsonObject = new JSONObject(response);
+                                MainActivity.utils.clearAll();
 
                                 tmp = jsonObject.getJSONArray("devices");
                                 for (int i = 0; i < tmp.length(); i++) {
                                     MainActivity.utils.addDevices(tmp.getJSONObject(i).getString("id"), tmp.getJSONObject(i).getString("name"));
                                     MainActivity.utils.addDevicesReverse(tmp.getJSONObject(i).getString("name"), tmp.getJSONObject(i).getString("id"));
+                                    MainActivity.utils.getDeviceNames().add(tmp.getJSONObject(i).getString("name"));
                                 }
                                 tmp = jsonObject.getJSONArray("clusters");
                                 for (int i = 0; i < tmp.length(); i++) {
                                     MainActivity.utils.addClusters(tmp.getJSONObject(i).getString("id"), tmp.getJSONObject(i).getString("name"));
                                     MainActivity.utils.addClustersReverse(tmp.getJSONObject(i).getString("name"), tmp.getJSONObject(i).getString("id"));
+                                    MainActivity.utils.getClusterNames().add(tmp.getJSONObject(i).getString("name"));
                                 }
                                 tmp = jsonObject.getJSONArray("projects");
                                 for (int i = 0; i < tmp.length(); i++) {
                                     MainActivity.utils.addProjects(tmp.getJSONObject(i).getString("id"), tmp.getJSONObject(i).getString("name"));
                                     MainActivity.utils.addProjectsReverse(tmp.getJSONObject(i).getString("name"), tmp.getJSONObject(i).getString("id"));
+                                    MainActivity.utils.getProjectNames().add(tmp.getJSONObject(i).getString("name"));
                                 }
+                                showHideRefresh(false);
+                                communicator.response("utils200");
                             }
 //
                         } catch (JSONException e) {
@@ -175,19 +307,19 @@ public class NetUtils {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                params.put("request_type", "utils");
+                params.put("request_type", requestType);
                 params.put("where", "1");
 
                 return params;
             }
         };
-        jsonArrayRequest.setTag("utils");
+        jsonArrayRequest.setTag(requestType);
         jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(2500, 4, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         VolleySingleton.getInstance(mCtx).addToRequestQueue(jsonArrayRequest);
 
     }
 
-    public void getCars(final String where) {
+    public void getCars(final String where, final String whereProject) {
 
         if (!isNetworkAvailable(activity)) {
             Utils.mToast(mCtx, "اتصال اینترنت برقرار نیست!", Toast.LENGTH_SHORT);
@@ -222,9 +354,13 @@ public class NetUtils {
                                 installingCount = rsp.getJSONObject(1).getInt("total");
                                 installedCount = rsp.getJSONObject(2).getInt("total");
                                 allCount = notInstalledCount + installingCount + installedCount;
-
-                                progressBar.setProgress(installedCount * 100 / allCount);
-                                tvPercent.setText(installedCount * 100 / allCount + " %");
+                                if (allCount != 0) {
+                                    progressBar.setProgress(installedCount * 100 / allCount);
+                                    tvPercent.setText(installedCount * 100 / allCount + " %");
+                                } else {
+                                    progressBar.setProgress(0);
+                                    tvPercent.setText(0 + " %");
+                                }
 
                                 for (int i = 3; i < len; i++) {
 
@@ -240,6 +376,7 @@ public class NetUtils {
                                     tmpCar.setCluster(jsonObject.getString("cluster-id"));
                                     tmpCar.setStatus((short) jsonObject.getInt("status"));
                                     tmpCar.setNassab_id(jsonObject.getString("nassab-id"));
+                                    tmpCar.setGps_pos(jsonObject.getString("gps-pos"));
 
 //                                    Log.d(MainActivity.TAG, tmpCar.getStatus() + "");
                                     MainActivity.cars.add(tmpCar);
@@ -250,6 +387,7 @@ public class NetUtils {
                                 else
                                     Utils.mToast(mCtx, "با موفقیت بارگذاری شد!", Toast.LENGTH_SHORT);
                                 setCountLabels();
+
 
                             } else {
                                 MainActivity.cars.clear();
@@ -290,6 +428,7 @@ public class NetUtils {
 
                 params.put("request_type", "cars");
                 params.put("where", where);
+                params.put("where_project", whereProject);
 
                 return params;
             }
@@ -302,8 +441,59 @@ public class NetUtils {
 
     }
 
+    public void addBatchCars(final JSONObject data) {
+
+
+        if (!isNetworkAvailable(activity)) {
+            Utils.mToast(mCtx, "اتصال اینترنت برقرار نیست!", Toast.LENGTH_SHORT);
+            return;
+        }
+        showHideRefresh(true);
+        // make a post request to the server
+        StringRequest stringPostRequest = new StringRequest(Request.Method.POST, DATABASE_URL_CAR, new Response.Listener<String>() {
+            private JSONObject rsp;
+
+            @Override
+            public void onResponse(String response) {
+
+//                showHideRefresh(false);
+//                try {
+//                Log.d(TAG, "res " + response);
+                communicator.response(response);
+//
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Utils.mToast(mCtx, error.toString(), Toast.LENGTH_SHORT);
+                        Log.d(TAG, "onErrorResponse: " + error);
+                        showHideRefresh(false);
+                    }
+                }) {
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("request_type", "add_batch");
+                params.put("data", data.toString());
+
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(mCtx).cancelPendingRequests("car_batch");
+
+        stringPostRequest.setTag("car_batch");
+        stringPostRequest.setRetryPolicy(new
+                DefaultRetryPolicy(10000, 4, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        VolleySingleton.getInstance(mCtx).addToRequestQueue(stringPostRequest);
+
+        showHideRefresh(true);
+    }
+
     public void registerEditLoginLogout(final String requestType, final String username, final String password, final String imageSrc,
-                                        final String card, final String phone, final String device) {
+                                        final String card, final String phone, final String device, final String pusheId) {
 
         if (!isNetworkAvailable(activity)) {
             Utils.mToast(mCtx, "اتصال اینترنت برقرار نیست!", Toast.LENGTH_SHORT);
@@ -368,6 +558,7 @@ public class NetUtils {
                 params.put("phone", phone);
                 params.put("card", card);
                 params.put("device", device);
+                params.put("pushe_id", pusheId);
                 return params;
             }
         };
@@ -385,7 +576,7 @@ public class NetUtils {
     public void editCar(Context ctx, final String requestType, final String set, final String car_id, final String user_id,
                         final String gps_imei, final String hardness
             , final String car_name, final String car_numberplate, final String gps_simcard, final String driver_name,
-                        final String driver_simcard, final String cluster, final String device_id, final String project_id) {
+                        final String driver_simcard, final String cluster, final String device_id, final String project_id, final String gps_pos) {
 
         final Context tmpContext;
         if (ctx != null)
@@ -398,7 +589,7 @@ public class NetUtils {
             Utils.mToast(tmpContext, "اتصال اینترنت برقرار نیست!", Toast.LENGTH_SHORT);
             return;
         }
-        refreshcarsEdit.setRefreshing(true);
+        showHideRefresh(true);
         VolleySingleton.getInstance(tmpContext).cancelPendingRequests("cars_edit");
 
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, DATABASE_URL_CAR,
@@ -406,18 +597,20 @@ public class NetUtils {
                     @Override
                     public void onResponse(String response) {
 
-//                        Log.d(TAG, "respon " + response);
+                        Log.d(TAG, "respon " + response);
 
-//                        if (response.equals("200")) {
-//
+                        showHideRefresh(false);
+//                        if (response.equals("200"))
+                        communicator.response(response);
+
+
 ////                            Utils.mToast(tmpContext, "با موفقیت بروزرسانی شد!", Toast.LENGTH_SHORT);
 //
 //                        } else {
 //
 ////                            Utils.mToast(tmpContext, "خطایی رخ داد", Toast.LENGTH_SHORT);
 //                        }
-                        communicator.response(response);
-                        refreshcarsEdit.setRefreshing(false);
+//                        communicator.response(response);
 
 
                     }
@@ -426,7 +619,8 @@ public class NetUtils {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG, "onErrorResponse: ");
-                        refreshcarsEdit.setRefreshing(false);
+                        Log.d(TAG, error.getMessage());
+                        showHideRefresh(false);
                         communicator.response(error + "");
                     }
                 })
@@ -451,6 +645,7 @@ public class NetUtils {
                 params.put("cluster", cluster);
                 params.put("device", device_id);
                 params.put("project", project_id);
+                params.put("gps_pos", gps_pos);
 
 
                 return params;
@@ -500,6 +695,7 @@ public class NetUtils {
                                     tmpUser.setCard(jsonObject.getString("card"));
                                     tmpUser.setStatus(jsonObject.getString("status"));
                                     tmpUser.setImage(jsonObject.getString("image"));
+                                    tmpUser.setPush_id(jsonObject.getString("push-id"));
 
 
                                     if (tmpUser.getName().equals(myUsername)) {
@@ -566,11 +762,16 @@ public class NetUtils {
         if (show) {
             if (refreshcars != null)
                 refreshcars.setRefreshing(true);
+            else if (refreshcarsEdit != null)
+                refreshcarsEdit.setRefreshing(true);
             else if (pbRegisterLogin != null)
                 pbRegisterLogin.setVisibility(View.VISIBLE);
         } else {
+
             if (refreshcars != null)
                 refreshcars.setRefreshing(false);
+            else if (refreshcarsEdit != null)
+                refreshcarsEdit.setRefreshing(false);
             else if (pbRegisterLogin != null)
                 pbRegisterLogin.setVisibility(View.GONE);
         }
@@ -630,9 +831,13 @@ public class NetUtils {
     {
         void response(String response);
 
+        void response(String response, ArrayList<Report> reports, ArrayList<Finance> finances, ArrayList<Nassab> users);
+
         void usersReceived();
 
         void usersLogout(String response);
+
+
     }
 
     public void setCommunicator(Communicator c) {

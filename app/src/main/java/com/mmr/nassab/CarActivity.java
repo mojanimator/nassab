@@ -18,19 +18,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mmr.nassab.Adapter.UsersAdapter;
+import com.mmr.nassab.Model.Finance;
 import com.mmr.nassab.Model.Nassab;
+import com.mmr.nassab.Model.Report;
 import com.mmr.nassab.Util.HardnessRadioButton;
 import com.mmr.nassab.Util.NetUtils;
 import com.mmr.nassab.Util.PresetRadioGroup;
 import com.mmr.nassab.Util.Utils;
 
 import java.util.ArrayList;
+
+import co.ronash.pushe.Pushe;
 
 /**
  * Created by Mojtaba Rajabi on 11/12/2018.
@@ -67,12 +72,22 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
     private String message;
     private Button btn_asd_reset, btn_asd_imei, btn_asd_gsminfo, btn_asd_getapn;
     private SwipeRefreshLayout swipeRefreshCarStatus;
+    private String gps_pos;
+    private EditText etGpsPos;
+    private String gpsPos;
+    private TextView tvGpsPos;
+    private String pushMessage;
+    private Nassab nassab2 = new Nassab();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setIcon(R.drawable.logo);
+        }
         viewInflater = getLayoutInflater();
         installfinishedView = viewInflater.inflate(R.layout.install_finished_layout, (ViewGroup) view, false);
 
@@ -112,9 +127,15 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
         spinnerNassab2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0)
-                    nassab = user_id + "@" + MainActivity.users.get(position - 1).getId();
-                else nassab = user_id;
+                if (position != 0) {
+                    nassab2 = MainActivity.users.get(position - 1);
+                    nassab = user_id + "@" + nassab2.getId();
+                    pushMessage = " یک نصب مشترک انجام دادند! " + username + " و " + nassab2.getName();
+                } else {
+                    nassab = user_id;
+                    nassab2.setId(Integer.valueOf(user_id));
+                    pushMessage = " یک نصب راانجام داد ! " + username;
+                }
 
                 Log.d(MainActivity.TAG, "onItemSelected: " + nassab);
             }
@@ -138,12 +159,13 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
         });
         tvId = findViewById(R.id.tv_code);
         tvName = findViewById(R.id.tv_name);
-        tvNumberPlate = findViewById(R.id.tv_numberplate);
+        tvNumberPlate = findViewById(R.id.tv_nasb_number);
         tvGps_imei = findViewById(R.id.tv_imei);
         tvGps_simcard = findViewById(R.id.tv_gps_simcard);
         tvDriver_name = findViewById(R.id.tv_driver_name);
         tvDriver_simcard = findViewById(R.id.tv_driver_simcard);
         tvCluster = findViewById(R.id.tv_cluster);
+        tvGpsPos = findViewById(R.id.tv_gps_pos);
         ivStatus = findViewById(R.id.iv_status3);
 
         id = extra.getString("id");
@@ -156,6 +178,7 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
         cluster = extra.getString("cluster");
         status = extra.getShort("status");
         changeStatus = status;
+        gpsPos = extra.getString("gps_pos");
 
         toolbarStatus = findViewById(R.id.toolbar_cars_status);
         if (status == 2 && !username.equals("admin"))
@@ -168,6 +191,9 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
         tvDriver_name.setText(driver_name);
         tvDriver_simcard.setText(driver_simcard);
         tvCluster.setText(cluster);
+        if (status == 2)
+            tvGpsPos.setText("محل نصب : " + gps_pos);
+
         NetUtils.setImage(status, ivStatus);
         netUtils = new NetUtils(context);
         netUtils.setCommunicator(this);
@@ -187,6 +213,8 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
         btn_asd_imei.setOnClickListener(this);
         btn_asd_gsminfo.setOnClickListener(this);
         btn_asd_getapn.setOnClickListener(this);
+
+        etGpsPos = installfinishedView.findViewById(R.id.et_gps_pos);
 
         btnInstallFinished = installfinishedView.findViewById(R.id.btn_install_finished);
         btnInstallFinished.setOnClickListener(this);
@@ -224,8 +252,11 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_install_finished: {
+                if (!etGpsPos.getText().toString().equals(""))
+                    netUtils.editCar(installfinishedView.getContext(), "edit_status", "status='2'", id, nassab, gps_imei, hardness, "", "", "", "", "", "", "", "", etGpsPos.getText().toString());
 
-                netUtils.editCar(installfinishedView.getContext(), "edit_status", "status='2'", id, nassab, gps_imei, hardness, "", "", "", "", "", "", "", "");
+                else
+                    Utils.mToast(context, "محل نصب را وارد کنید", Toast.LENGTH_SHORT);
                 break;
             }
             case R.id.status_installed: {
@@ -236,12 +267,12 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.status_installing: {
                 changeStatus = 1;
 //                Log.d(MainActivity.TAG, id);
-                netUtils.editCar(installfinishedView.getContext(), "edit_status", "status='1'", id, nassab, gps_imei, "", "", "", "", "", "", "", "", "");
+                netUtils.editCar(installfinishedView.getContext(), "edit_status", "status='1'", id, nassab, gps_imei, "", "", "", "", "", "", "", "", "", "");
                 break;
             }
             case R.id.status_not_Installed: {
                 changeStatus = 0;
-                netUtils.editCar(installfinishedView.getContext(), "edit_status", "status='0'", id, nassab, gps_imei, "", "", "", "", "", "", "", "", "");
+                netUtils.editCar(installfinishedView.getContext(), "edit_status", "status='0'", id, nassab, gps_imei, "", "", "", "", "", "", "", "", "", "");
                 break;
             }
             case R.id.rb_hardness_1: {
@@ -278,11 +309,23 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void response(String response) {
-        if (response.equals("ok")) {
+        if (response.equals("200")) {
             status = changeStatus;
-            if (status == 2)
-                onBackPressed();
             NetUtils.setImage(status, ivStatus);
+            if (status == 2) {
+
+                try {
+                    for (Nassab n : MainActivity.users) {
+                        if (!String.valueOf(n.getId()).equals(user_id) && n.getId() != nassab2.getId())
+                            Pushe.sendCustomJsonToUser(context, n.getPush_id(), "{ \"title\":\"تاژان\", \"message\":\"" + pushMessage + "\" }");
+                    }
+
+                } catch (co.ronash.pushe.i.d d) {
+                    Utils.mToast(context, d.getMessage(), Toast.LENGTH_SHORT);
+                }
+
+                onBackPressed();
+            }
         } else {
 
             changeStatusRadio(status);
@@ -291,6 +334,11 @@ public class CarActivity extends AppCompatActivity implements View.OnClickListen
         dialogInstallFinished.dismiss();
 //        onBackPressed();
 //        Log.d(MainActivity.TAG, response);
+    }
+
+    @Override
+    public void response(String response, ArrayList<Report> reports, ArrayList<Finance> finances, ArrayList<Nassab> users) {
+
     }
 
     @Override

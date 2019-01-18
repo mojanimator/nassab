@@ -7,6 +7,65 @@
     android:layout_height="match_parent"
     android:background="@color/colorText">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/filterBar"
+        android:background="?attr/colorPrimary"
+        android:padding="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Spinner
+                android:id="@+id/spinner_project"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+
+                android:layout_marginStart="8dp"
+                android:background="@drawable/spinner_background"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_project_name"
+                app:layout_constraintHorizontal_weight=".2"
+                app:layout_constraintStart_toEndOf="@+id/imageButtonSettings"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_project_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="پروژه"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/expandable_textSize_rows"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/imageButtonSettings"
+                android:layout_width="@dimen/float_size"
+                android:layout_height="@dimen/float_size"
+                android:layout_marginStart="8dp"
+                android:background="@mipmap/ic_launcher_round"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.Toolbar>
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar-cars"
@@ -16,7 +75,8 @@
         android:gravity="center_horizontal|center"
         android:minHeight="?attr/actionBarSize"
         android:padding="4dp"
-        android:theme="?attr/actionBarTheme">
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_main">
 
         <com.mmr.nassab.Util.PresetRadioGroup
             android:id="@+id/rg_status"
@@ -131,7 +191,7 @@
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/etSearch"
-            app:layout_constraintHorizontal_weight=".2"
+            app:layout_constraintHorizontal_weight=".5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -182,13 +242,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cl_fabs"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchLayout">
+
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshCars"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight=".8"
+            app:layout_constraintStart_toEndOf="@+id/sw_fabs"
+            app:layout_constraintTop_toTopOf="parent">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_cars"
@@ -205,6 +274,94 @@
 
         </android.support.v4.widget.SwipeRefreshLayout>
 
+        <ScrollView
+            android:id="@+id/sw_fabs"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/progressCars"
+            app:layout_constraintEnd_toStartOf="@+id/swipeRefreshCars"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight=".2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin"
+                android:minHeight="500dp">
+
+                <ListView
+                    android:id="@+id/gv_users"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginBottom="@dimen/margin"
+
+                    android:layout_marginTop="8dp"
+                    android:clipToPadding="false"
+                    android:divider="@color/colorText"
+                    android:dividerHeight="@dimen/margin"
+                    android:gravity="center"
+                    android:minHeight="500dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fab_reports" />
+
+                <com.mmr.nassab.Util.CircleNetworkImageView
+                    android:id="@+id/civ_me"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/float_size"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:foregroundGravity="center_horizontal"
+                    android:padding="0dp"
+
+                    android:src="@drawable/ic_user"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:rippleColor="@color/colorAccent" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_add_car"
+                    android:layout_width="@dimen/float_size"
+                    android:layout_height="@dimen/float_size"
+
+
+                    android:layout_marginTop="@dimen/margin"
+                    android:src="@android:drawable/ic_menu_add"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/civ_me"
+                    app:rippleColor="@color/colorAccent"
+                    app:srcCompat="@android:drawable/ic_menu_add" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab_reports"
+                    android:layout_width="@dimen/float_size"
+                    android:layout_height="@dimen/float_size"
+
+
+                    android:layout_marginTop="@dimen/margin"
+                    android:src="@android:drawable/ic_menu_report_image"
+                    app:backgroundTint="@color/colorPrimary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fab_add_car"
+                    app:rippleColor="@color/colorAccent" />
+
+            </android.support.constraint.ConstraintLayout>
+        </ScrollView>
+
         <ProgressBar
             android:id="@+id/progressCars"
             android:layout_width="0dp"
@@ -218,89 +375,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/swipeRefreshCars" />
     </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/cl_fabs"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:foregroundGravity="center_horizontal"
-        android:padding="0dp"
-        app:layout_constraintEnd_toStartOf="@+id/cl_cars"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchLayout">
-
-        <com.mmr.nassab.Util.CircleNetworkImageView
-            android:id="@+id/civ_me"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/float_size"
-            android:layout_margin="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:foregroundGravity="center_horizontal"
-            android:padding="0dp"
-
-            android:src="@drawable/ic_user"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:rippleColor="@color/colorAccent" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_add_car"
-            android:layout_width="@dimen/float_size"
-            android:layout_height="@dimen/float_size"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-
-
-            android:src="@android:drawable/ic_menu_add"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/civ_me"
-            app:rippleColor="@color/colorAccent"
-            app:srcCompat="@android:drawable/ic_menu_add" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_reports"
-            android:layout_width="@dimen/float_size"
-            android:layout_height="@dimen/float_size"
-            android:layout_marginEnd="8dp"
-
-
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@android:drawable/ic_menu_report_image"
-            app:backgroundTint="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fab_add_car"
-            app:rippleColor="@color/colorAccent" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <ListView
-        android:id="@+id/gv_users"
-        android:layout_width="80dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:clipToPadding="false"
-        android:divider="@color/colorText"
-        android:dividerHeight="8dp"
-        android:gravity="center"
-        android:orientation="vertical"
-
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cl_cars"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_fabs" />
 
 </android.support.constraint.ConstraintLayout>

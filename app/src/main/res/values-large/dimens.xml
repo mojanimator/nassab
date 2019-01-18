@@ -17,4 +17,7 @@
     <dimen name="image_size">300dp</dimen>
     <dimen name="float_size">70dp</dimen>
     <dimen name="icon_logo">200dp</dimen>
+    <dimen name="status_image">100dp</dimen>
+    <dimen name="nassab_image">50dp</dimen>
+    <dimen name="margin">4dp</dimen>
 </resources>
